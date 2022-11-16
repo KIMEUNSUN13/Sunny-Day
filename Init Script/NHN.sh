@@ -18,4 +18,4 @@ systemctl restart sshd
 systemctl disable firewalld 
 systemctl stop firewalld
 
-ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtim
+ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
