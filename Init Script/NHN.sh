@@ -15,7 +15,7 @@ sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_
 
 systemctl restart sshd
 
-for NUM in $(seq 2 7); do mv /etc/sysconfig/network-scripts/ifcfg-eth${NUM} /etc/sysconfig/network-scripts/ifcfg-eth${NUM}.bak; done
+for NUM in $(seq 2 7); do mv /etc/sysconfig/network-scripts/ifcfg-eth${NUM} /etc/sysconfig/network-scripts/ifcfg-eth${NUM}.bak; done >/dev/null 2>&1
 systemctl restart network
 
 systemctl disable firewalld 
