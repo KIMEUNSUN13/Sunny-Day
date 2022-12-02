@@ -1,12 +1,12 @@
 #!/bin/bash
 
-echo 'iteyes7979!@' | passwd --stdin ncloud
+echo 'ncloud' | passwd --stdin ncloud
 
 useradd iteyes
-echo 'iteyes7979!@' | passwd --stdin iteyes
+echo 'eunsun' | passwd --stdin eunsun
 
 cp -a /etc/sudoers /etc/sudoers.bak
-echo "iteyes  ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
+echo "eunsun  ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers
 
 mkdir -p /root/script_bak
 cp -a /etc/yum.conf /root/script_bak/yum.conf.bak
