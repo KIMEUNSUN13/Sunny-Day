@@ -77,15 +77,4 @@ systemctl restart network
 systemctl disable firewalld 
 systemctl stop firewalld
 
-
-#================#
-#    SELINUX     #
-#================#
-setenforce 0
-sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config 
-
-
-#================#
-#    LOCALE      #
-#================#
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
