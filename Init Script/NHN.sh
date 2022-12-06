@@ -5,6 +5,11 @@
 #    User Add    #
 #================#
 echo 'root' | passwd --stdin root
+usermod -a -G wheel root
+
+chmod 4755 /bin/su
+chown :wheel /bin/su
+
 echo 'centos' | passwd --stdin centos
 
 useradd infadm
@@ -22,17 +27,15 @@ cp -a /etc/sudoers /etc/sudoers.bak
 {
     # echo "%wheel  ALL=(ALL)       ALL" 
     # echo "#%wheel  ALL=(ALL)       NOPASSWD: ALL"
-    echo "wasadm  ALL=(ALL)       ALL"
+    echo "%wasadm  ALL=(ALL)       ALL"
 }| tee -a /etc/sudoers 
 
-cp -a /etc/pam.d/su /etc/pam.d/su.bak 
-sed -i "s/#auth required pam_wheel.so use_uid/auth required	pam_wheel.so use_uid/g" /etc/pam.d/su
+sed -i.bak "s/#auth required pam_wheel.so use_uid/auth required	pam_wheel.so use_uid/g" /etc/pam.d/su
 
 
 #================#
 #    Password    #
 #================#
-# authconfig 사용?
 cp -a /etc/security/pwquality.conf /etc/security/pwquality.conf.bak
 {
     echo "lcredit=-1" # 영문 소문자
@@ -53,14 +56,13 @@ sed -i "s/HISTFILESIZE=0//g" /etc/profile
 
 
 #================#
-#    SSH Conf    #
+#    SSH Root    #
 #================#
 # PermitRootLogin no
 cp -a /etc/securetty /etc/securetty.bak 
 sed -ri "s/pts\/[0-9]//g" /etc/securetty
 
-cp -a /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
-sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+sed -i.bak "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 systemctl restart sshd
 
 
@@ -77,4 +79,8 @@ systemctl restart network
 systemctl disable firewalld 
 systemctl stop firewalld
 
+
+#================#
+#    LOCALE      #
+#================#
 ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
